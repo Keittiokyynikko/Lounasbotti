@@ -22,7 +22,7 @@ var ondaBuffetLiha = {}
 var ondaVegan = {}
 var ondaLiha = {}
 
-async function scapeProduct(url) {
+async function scapeProductOnda(url) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
@@ -126,7 +126,7 @@ async function scapeProduct(url) {
     console.log(ondaBuffetVegan, ondaBuffetLiha, ondaVegan, ondaLiha, ondaSalad)
 }
 
-scapeProduct(onda)
+scapeProductOnda(onda)
 
 
 //------------------------
@@ -134,11 +134,111 @@ scapeProduct(onda)
 
 //Lintulahti scrape
 
+
+const lintulahtiRSS = 'https://www.foodandco.fi/modules/MenuRss/MenuRss/CurrentDay?costNumber=0069&language=fi'
+
 //Bruket scape
 
 //Tanner scrape
 
 //Pantry scrape
+
+const pantry = 'https://thepantry.fi/sornainen/#lounas'
+
+var paivanLiha = {}
+var paivanKasvis = {}
+var paivanKala = {}
+
+async function scrapeProductPantry(url) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    const monday_vegan = null
+    const monday_liha = null
+    const monday_kala = null
+
+    const tuesday_vegan = null
+    const tuesday_liha = null
+    const tuesday_kala = null
+
+    const wednesday_vegan = null
+    const wednesday_liha = null
+    const wednesday_kala = null
+
+    const thursday_vegan = '//*[@id="torstai"]/div/div[5]/div/div/div[1]/div/div/div/div/div[2]/div[1]/h6';
+    const thursday_liha = '//*[@id="torstai"]/div/div[1]/div/div/div[1]/div/div/div/div/div[2]/div[1]/h6';
+    const thursday_kala = '//*[@id="torstai"]/div/div[3]/div/div/div[1]/div/div/div/div/div[2]/div[1]/h6';
+
+    const friday_vegan = null
+    const friday_liha = null
+    const friday_kala = null
+
+    var lunchVegan
+    var lunchLiha
+    var lunchKala
+    if(dateIndex == 1) {
+        lunchVegan = monday_vegan
+        lunchLiha = monday_liha
+        lunchKala = monday_kala
+    } else if(dateIndex == 2) {
+        lunchVegan = tuesday_vegan
+        lunchLiha = tuesday_liha
+        lunchKala = tuesday_kala
+    } else if(dateIndex == 3) {
+        lunchVegan = wednesday_vegan
+        lunchLiha = wednesday_liha
+        lunchKala = wednesday_kala
+    } else if(dateIndex == 4) {
+        lunchVegan = thursday_vegan
+        lunchLiha = thursday_liha
+        lunchKala = thursday_kala
+    } else if(dateIndex == 5) {
+        lunchVegan = friday_vegan
+        lunchLiha = friday_liha
+        lunchKala = friday_kala
+    }
+
+    //Lounas hinta
+    const [el0] = await page.$x('//*[@id="torstai"]/div/div[5]/div/div/div[2]/div/div/div/div/div/div[1]/h6');
+    const txt0 = await el0.getProperty('textContent')
+    var price = await txt0.jsonValue()
+    price = price.replace(/(\r\n|\n|\r)/gm, "")
+    price = price.trim()
+
+    //Päivän liha nimi
+    const [el4] = await page.$x(lunchLiha);
+    const txt4 = await el4.getProperty('textContent')
+    var paivan_liha_name = await txt4.jsonValue()
+    paivan_liha_name = paivan_liha_name.replace(/(\r\n|\n|\r)/gm, "")
+    paivan_liha_name = paivan_liha_name.trim()
+
+    //Päivän kasvis nimi
+    const [el5] = await page.$x(lunchVegan);
+    const txt5 = await el5.getProperty('textContent')
+    var paivan_kasvis_name = await txt5.jsonValue()
+    paivan_kasvis_name = paivan_kasvis_name.replace(/(\r\n|\n|\r)/gm, "")
+    paivan_kasvis_name = paivan_kasvis_name.trim()
+
+    //Päivän kala nimi
+    const [el6] = await page.$x(lunchKala);
+    const txt6 = await el6.getProperty('textContent')
+    var paivan_kala_name = await txt6.jsonValue()
+    paivan_kala_name = paivan_kala_name.replace(/(\r\n|\n|\r)/gm, "")
+    paivan_kala_name = paivan_kala_name.trim()
+
+    //JSON-objektit
+    paivanLiha = {"name": paivan_liha_name, "price": price}
+    paivanKasvis = {"name": paivan_kasvis_name, "price": price}
+    paivanKala = {"name": paivan_kala_name, "price": price}
+    console.log(paivanLiha, paivanKasvis, paivanKala)
+}
+
+scrapeProductPantry(pantry)
+
+
+//------------------------
+
 
 const PORT = 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))

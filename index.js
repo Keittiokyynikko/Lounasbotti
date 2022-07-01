@@ -1,7 +1,10 @@
+require('dotenv').config({path:'D:\Juuso_2022\kuubi\lounasbotti-2/.env'})
+
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
+const {WebClient} = require('@slack/web-api');
 
 const app = express();
 
@@ -126,7 +129,7 @@ async function scapeProductOnda(url) {
     console.log(ondaBuffetVegan, ondaBuffetLiha, ondaVegan, ondaLiha, ondaSalad)
 }
 
-scapeProductOnda(onda)
+//scapeProductOnda(onda)
 
 
 //------------------------
@@ -234,10 +237,259 @@ async function scrapeProductPantry(url) {
     console.log(paivanLiha, paivanKasvis, paivanKala)
 }
 
-scrapeProductPantry(pantry)
+//scrapeProductPantry(pantry)
 
 
 //------------------------
+
+const slackbot = new WebClient(process.env.SLACK_BOT_TOKEN)
+
+const lounas = {"name": "Liha", "hinta": "12.50"};
+const currentTime = new Date().toTimeString();
+
+(async () => {
+
+  try {
+    // Use the `chat.postMessage` method to send a message from this app
+    await slackbot.chat.postMessage({
+      channel: '#lounasbotti-2',
+      blocks: [
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": ":cook:  Päivän lounaat"
+			}
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"text": "Date()",
+					"type": "mrkdwn"
+				}
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "RAVINTOLAN NIMI"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Sivusto",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://google.com",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": `${lounas.name}`
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 2"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 3"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "RAVINTOLAN NIMI"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Sivusto",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://google.com",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 1"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 2"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 3"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "RAVINTOLAN NIMI"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Sivusto",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://google.com",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 1"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 2"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 3"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "RAVINTOLAN NIMI"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Sivusto",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://google.com",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 1"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 2"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 3"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "RAVINTOLAN NIMI"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Sivusto",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://google.com",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 1"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 2"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Lounas 3"
+			}
+		}
+	]
+    });
+    console.log('Message posted!');
+  } catch (error) {
+    console.log(error);
+  }
+
+})();
+
+
 
 
 const PORT = 8000;

@@ -248,7 +248,8 @@ async function scrapeProductPantry(url, callback) {
 
 //Slack-viestin kokoaminen ja lähettäminen
 
-const slackbot = new WebClient(process.env.token)
+const slackbot = new WebClient(SLACK_BOT_TOKEN_K)
+const dayString = new Date().toDateString()
 
 async function sendMessage () {
 
@@ -258,6 +259,9 @@ async function sendMessage () {
       channel: '#lounasbotti-2',
       text: "Sisältöä ei voi näyttää, ota yhteyttä ohjelmoijaan!",
       blocks: [
+        {
+			"type": "divider"
+		},
 		{
 			"type": "header",
 			"text": {
@@ -269,7 +273,7 @@ async function sendMessage () {
 			"type": "context",
 			"elements": [
 				{
-					"text": "Date()",
+					"text": `${dayString}`,
 					"type": "mrkdwn"
 				}
 			]
@@ -281,7 +285,7 @@ async function sendMessage () {
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "RAVINTOLAN NIMI"
+				"text": "*ONDA*"
 			},
 			"accessory": {
 				"type": "button",
@@ -291,7 +295,7 @@ async function sendMessage () {
 					"emoji": true
 				},
 				"value": "click_me_123",
-				"url": "https://google.com",
+				"url": "https://ravintolaonda.fi/",
 				"action_id": "button-action"
 			}
 		},
@@ -299,21 +303,28 @@ async function sendMessage () {
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": `${ondaBuffetVegan.name}`
+				"text": `${ondaBuffetVegan.name}, *${ondaBuffetVegan.price}*`
 			}
 		},
 		{
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "Lounas 2"
+				"text": `${ondaBuffetLiha.name}, *${ondaBuffetLiha.price}*`
 			}
 		},
 		{
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "Lounas 3"
+				"text": `${ondaVegan.name}, *${ondaVegan.price}*`
+			}
+		},
+        {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": `${ondaLiha.name}, *${ondaLiha.price}*`
 			}
 		},
 		{
@@ -483,7 +494,11 @@ async function sendMessage () {
 				"type": "mrkdwn",
 				"text": "Lounas 3"
 			}
-		}
+		},
+        {
+			"type": "divider"
+		},
+
 	]
     });
     console.log('Message posted!');
@@ -492,6 +507,23 @@ async function sendMessage () {
   }
 
 };
+
+/*
+async function test () {
+    try {
+        // Use the `chat.postMessage` method to send a message from this app
+        await slackbot.chat.postMessage({
+          channel: '#lounas',
+          text: "Heippa! Olen Lempi Lounasbotti ja testaan kuuluvuuttani. Kuulette minusta lisää syksyllä!",
+        });
+        console.log('Message posted!');
+      } catch (error) {
+        console.log(error);
+      }
+}
+
+test()
+*/
 
 
 

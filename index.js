@@ -25,7 +25,7 @@ var ondaBuffetLiha = {}
 var ondaVegan = {}
 var ondaLiha = {}
 
-async function scapeProductOnda(url) {
+async function scapeProductOnda(url, callback) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
@@ -126,10 +126,12 @@ async function scapeProductOnda(url) {
     ondaLiha = {"name": lounas2_name, "price": price_lounas2 + ' €'}
     ondaBuffetVegan = {"name":buffet_vegan_name, "price":price_buffet + ' €'}
     ondaBuffetLiha = {"name":buffet_liha_name, "price":price_buffet + ' €'}
+
     console.log(ondaBuffetVegan, ondaBuffetLiha, ondaVegan, ondaLiha, ondaSalad)
+    callback()
 }
 
-//scapeProductOnda(onda)
+scapeProductOnda(onda, sendMessage)
 
 
 //------------------------
@@ -152,7 +154,7 @@ var paivanLiha = {}
 var paivanKasvis = {}
 var paivanKala = {}
 
-async function scrapeProductPantry(url) {
+async function scrapeProductPantry(url, callback) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
@@ -234,7 +236,8 @@ async function scrapeProductPantry(url) {
     paivanLiha = {"name": paivan_liha_name, "price": price}
     paivanKasvis = {"name": paivan_kasvis_name, "price": price}
     paivanKala = {"name": paivan_kala_name, "price": price}
-    console.log(paivanLiha, paivanKasvis, paivanKala)
+
+    callback();
 }
 
 //scrapeProductPantry(pantry)
@@ -242,23 +245,24 @@ async function scrapeProductPantry(url) {
 
 //------------------------
 
-const slackbot = new WebClient(process.env.SLACK_BOT_TOKEN)
 
-const lounas = {"name": "Liha", "hinta": "12.50"};
-const currentTime = new Date().toTimeString();
+//Slack-viestin kokoaminen ja lähettäminen
 
-(async () => {
+const slackbot = new WebClient(process.env.token)
+
+async function sendMessage () {
 
   try {
     // Use the `chat.postMessage` method to send a message from this app
     await slackbot.chat.postMessage({
       channel: '#lounasbotti-2',
+      text: "Sisältöä ei voi näyttää, ota yhteyttä ohjelmoijaan!",
       blocks: [
 		{
 			"type": "header",
 			"text": {
 				"type": "plain_text",
-				"text": ":cook:  Päivän lounaat"
+				"text": "Päivän lounaat :cook:"
 			}
 		},
 		{
@@ -295,7 +299,7 @@ const currentTime = new Date().toTimeString();
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": `${lounas.name}`
+				"text": `${ondaBuffetVegan.name}`
 			}
 		},
 		{
@@ -487,7 +491,7 @@ const currentTime = new Date().toTimeString();
     console.log(error);
   }
 
-})();
+};
 
 
 

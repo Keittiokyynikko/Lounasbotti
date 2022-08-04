@@ -4,10 +4,10 @@ const express = require('express');
 const axios = require('axios');
 const {WebClient} = require('@slack/web-api');
 
-const {scrape_onda} = require('./onda_scrape.js');
-const {scrape_pantry} = require('./pantry_scrape.js');
-const {scrape_pihka} = require('./pihka_scrape.js');
-const {scrape_bruket} = require('./bruket_scrape.js')
+const {scrape_onda} = require('./restaurants/onda_scrape.js');
+const {scrape_pantry} = require('./restaurants/pantry_scrape.js');
+const {scrape_pihka} = require('./restaurants/pihka_scrape.js');
+const {scrape_bruket} = require('./restaurants/bruket_scrape.js')
 
 const app = express();
 

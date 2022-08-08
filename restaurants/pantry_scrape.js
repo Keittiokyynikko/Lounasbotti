@@ -81,11 +81,11 @@ async function scrape_pantry(url, date_index) {
 
 
 
-    const pantry_lunch_vegan = {"name": lunch_vegan_name, "price": lunch_price + ' €'}
-    const pantry_lunch_meat = {"name": lunch_meat_name, "price": lunch_price + ' €'}
-    const pantry_lunch_fish = {"name": lunch_fish_name, "price": lunch_price + ' €'}
+    const pantry_lunch_vegan = {"name": lunch_vegan_name, "price": lunch_price}
+    const pantry_lunch_meat = {"name": lunch_meat_name, "price": lunch_price}
+    const pantry_lunch_fish = {"name": lunch_fish_name, "price": lunch_price}
 
-    return [pantry_lunch_meat, pantry_lunch_meat, pantry_lunch_fish]
+    return [pantry_lunch_vegan, pantry_lunch_meat, pantry_lunch_fish]
 
 }
 

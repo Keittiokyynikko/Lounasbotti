@@ -21,8 +21,8 @@ async function scrape_onda(url, date_index) {
 
     //Lunch-elements from website
 
-    const monday_vegan = '//*[@id="lunchbox"]/div/div[2]/div[3]/div[1]/p[1]';
-    const monday_liha = '//*[@id="lunchbox"]/div/div[2]/div[4]/div[1]/p[1]';
+    const monday_vegan = '//*[@id="lunchbox"]/div/div[2]/div[4]/div[1]/p[1]';
+    const monday_liha = '//*[@id="lunchbox"]/div/div[2]/div[5]/div[1]/p[1]';
 
     const tuesday_vegan = '//*[@id="lunchbox"]/div/div[3]/div[4]/div[1]/p[1]';
     const tuesday_liha = '//*[@id="lunchbox"]/div/div[3]/div[5]/div[1]/p[1]';
@@ -77,10 +77,10 @@ async function scrape_onda(url, date_index) {
     const [lunch_option_2_price_xpath] = await page.$x('//*[@id="lunchbox"]/div/div[3]/div[7]/div[2]/p');
     const lunch_option_2_price = await format_data(lunch_option_2_price_xpath)
 
-    const [lunch_option_1_name_xpath] = await page.$x('//*[@id="lunchbox"]/div/div[3]/div[4]/div[1]/p[1]');
+    const [lunch_option_1_name_xpath] = await page.$x('//*[@id="lunchbox"]/div/div[2]/div[6]/div[1]/p[1]');
     const lunch_option_1_name = await format_data(lunch_option_1_name_xpath)
 
-    const [lunch_option_2_name_xpath] = await page.$x('//*[@id="lunchbox"]/div/div[3]/div[4]/div[1]/p[1]');
+    const [lunch_option_2_name_xpath] = await page.$x('//*[@id="lunchbox"]/div/div[2]/div[7]/div[1]/p[1]');
     const lunch_option_2_name = await format_data(lunch_option_2_name_xpath)
 
 

@@ -1,0 +1,3 @@
+const monday_greetings = [
+    ""
+]

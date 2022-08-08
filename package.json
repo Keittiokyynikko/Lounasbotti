@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev" : "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "author": "Juuso Karvinen",
   "license": "ISC",
@@ -17,8 +17,11 @@
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "isomorphic-unfetch": "^3.1.0",
+    "jquery": "^3.6.0",
     "puppeteer": "^15.1.1",
-    "slackbots": "^1.2.0"
+    "slackbots": "^1.2.0",
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

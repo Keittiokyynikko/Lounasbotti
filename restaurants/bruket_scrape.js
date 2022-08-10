@@ -1,14 +1,32 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
+const axios = require('axios');
 
-const onda = 'http://www.bruketcafe.fi/';
+async function scrape_bruket(url, date_index) {
+    const promise = await new Promise((resolve, reject) => {
+        const bruket = 'https://www.kampanja.co/dev/bruket/admin/api.php?a=lunch';
+        axios.get(bruket)
+        .then((res) => {
+            const data = res.data
 
-const $ = cheerio.load('http://www.bruketcafe.fi/')
+            const lunch_array = []
+            
+            for(i=0; i < data.length; i++) {
+                if(data[i].weekday == date_index) {
+                    lunch_array.push(data[i].dish)
+                }
+            }
+            
 
-const test = $('#weekdays').first().text()
-console.log(test)
+            resolve(lunch_array)
 
+        })
 
+    })
+    return promise
+}
+
+/*
 async function format_data (data) {
     const get_txt_content = await data.getProperty('textContent')
     let formated_data = await get_txt_content.jsonValue()
@@ -17,7 +35,7 @@ async function format_data (data) {
     return formated_data
 }
 
-
+/*
 async function scrape_bruket(url, date_index) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -32,7 +50,7 @@ async function scrape_bruket(url, date_index) {
 
     const tuesday_dish_1 = '//*[@id="weekday-2"]/div/div[1]/div[1]';
     const tuesday_dish_2 = '//*[@id="weekday-2"]/div/div[2]/div[1]';
-    const tuesday_soup = '//*[@id="weekday-2"]/div/div[3]/div[2]';
+    const tuesday_soup = '//*[@id="weekday-2"]/div/div[3]/div[1]';
 
     const wednesday_dish_1 = '//*[@id="weekday-3"]/div/div[1]/div[1]';
     const wednesday_dish_2 = '//*[@id="weekday-3"]/div/div[1]/div[1]';
@@ -97,6 +115,6 @@ async function scrape_bruket(url, date_index) {
 
     return [bruket_lunch_dish1, bruket_lunch_dish2, bruket_soup, lunch_price_formated]
 
-}
+}*/
 
 module.exports = {scrape_bruket}

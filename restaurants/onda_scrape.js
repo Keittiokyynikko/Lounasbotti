@@ -28,7 +28,7 @@ async function scrape_onda(url, date_index) {
     const tuesday_liha = '//*[@id="lunchbox"]/div/div[3]/div[5]/div[1]/p[1]';
 
     const wednesday_vegan = '//*[@id="lunchbox"]/div/div[4]/div[4]/div[1]/p[1]'
-    const wednesday_liha = '//*[@id="lunchbox"]/div/div[3]/div[5]/div[1]/p[1]'
+    const wednesday_liha = '//*[@id="lunchbox"]/div/div[4]/div[5]/div[1]/p[1]'
 
     const thursday_vegan = '//*[@id="lunchbox"]/div/div[5]/div[4]/div[1]/p[1]';
     const thursday_liha = '//*[@id="lunchbox"]/div/div[5]/div[5]/div[1]/p[1]';

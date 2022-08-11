@@ -1,3 +1,0 @@
-const monday_greetings = [
-    ""
-]

@@ -73,31 +73,7 @@ const lunch_section = (dish_name, dish_price) => {
 }
 }
 
-async function restaurant_lunch_section_build_1 (restaurant, url, date, index) {
-
-    const restaurant_url = url;
-    const restaurant_menu = await scrape_onda(restaurant_url, date)
-
-    const promise = await new Promise((resolve, reject) => {
-
-        const restaurant_header_block = restaurant_header(restaurant, url)      
-        const restaurant_dish_array = []
-        const restaurant_dish_blocks = []
-        for(i=0; i<restaurant_menu.length; i++) {
-            restaurant_dish_array[i] = {"name": restaurant_menu[i].name, "price": restaurant_menu[i].price}
-            restaurant_dish_blocks[i] = lunch_section(restaurant_menu[i].name, restaurant_menu[i].price)
-        }
-
-        //console.log(onda_dish_blocks)
-        
-        resolve(restaurant_dish_blocks[index])
-    })
-
-    return promise
-
-}
-
-
+/*
 async function slack_message_build() {
     const onda = 'https://ravintolaonda.fi/';
     const onda_lunch = await scrape_onda(onda, current_date)
@@ -132,5 +108,30 @@ async function slack_message_build() {
 
     return promise
 }
+*/
 
-module.exports = {header, restaurant_header, slack_message_build, restaurant_lunch_section_build_1}
+async function restaurant_lunch_section_build_1 (restaurant, url, date, index) {
+
+    const restaurant_url = url;
+    const restaurant_menu = await scrape_onda(restaurant_url, date)
+
+    const promise = await new Promise((resolve, reject) => {
+
+        const restaurant_header_block = restaurant_header(restaurant, url)      
+        const restaurant_dish_array = []
+        const restaurant_dish_blocks = []
+        for(i=0; i<restaurant_menu.length; i++) {
+            restaurant_dish_array[i] = {"name": restaurant_menu[i].name, "price": restaurant_menu[i].price}
+            restaurant_dish_blocks[i] = lunch_section(restaurant_menu[i].name, restaurant_menu[i].price)
+        }
+
+        //console.log(onda_dish_blocks)
+        
+        resolve(restaurant_dish_blocks[index])
+    })
+
+    return promise
+
+}
+
+module.exports = {header, restaurant_header, restaurant_lunch_section_build_1}

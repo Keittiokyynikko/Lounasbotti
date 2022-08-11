@@ -10,8 +10,8 @@ const {scrape_pihka} = require('./restaurants/pihka_scrape.js');
 const {scrape_bruket} = require('./restaurants/bruket_scrape.js');
 const {scrape_fazer} = require('./restaurants/fazer_scrape.js');
 
-const {greeting} = require('./components/greetings.js')
-const {header, restaurant_header, restaurant_lunch_section_build_1} = require('./components/message_block_builder.js')
+const {greeting} = require('./components/greetings.js');
+const {header, restaurant_header, restaurant_lunch_section_build_1} = require('./components/message_block_builder.js');
 
 const app = express();
 
@@ -133,7 +133,7 @@ async function send_message () {
 send_message()
 
 
-const port = 3000
+const port = process.env.PORT || 3000
 app.listen(port, () => {
   console.log(`Lounasbotti_2 app listening on port ${port}`)
 })

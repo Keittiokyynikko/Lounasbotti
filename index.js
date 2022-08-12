@@ -28,7 +28,7 @@ const {
 	greeting
 } = require('./components/greetings.js');
 const {
-	restaurant_lunch_section_build_1
+	header, restaurant_lunch_section_build_1
 } = require('./components/message_block_builder.js');
 
 const app = express();

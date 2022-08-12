@@ -1,5 +1,3 @@
-
-
 const monday_greetings = [
     "Aurinkoista maanantaita! Viikko on hyvä aloittaa maittavalla lounaalla ja tässä teille vaihtoehtoja:",
     "Maanantaipäiviä kaikille! Tänään saattaa ärsyttää ja päätä kivistää, mutta onneksi on tarjolla paljon einestä:",
@@ -23,15 +21,13 @@ const greetings = [monday_greetings, tuesday_greetings, wednesday_greetings]
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const current_date = new Date().getDay();
 
-let day_greetings
-for(i=0; greetings.length; i++) {
-    if(greetings[i] == current_date-1) {
-        day_greetings = greetings[i]
-    }
-}
+const day_greetings = greetings[current_date - 1]
 
-const greeting = day_greetings[Math.floor(Math.random()*day_greetings.length)];
+const greeting =
+    day_greetings[Math.floor(Math.random() * day_greetings.length)];
 
 console.log("Testi" + greeting)
 
-module.exports = {greeting}
+module.exports = {
+    greeting
+};

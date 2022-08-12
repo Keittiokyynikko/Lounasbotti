@@ -105,7 +105,7 @@ async function restaurant_lunch_section_build_1(restaurant, url, date, index, ca
 
         const restaurant_dish_array = []
         const restaurant_dish_blocks = []
-        for (i = 0; i < restaurant_menu.length; i++) {
+        for (var i = 0; i < restaurant_menu.length; i++) {
             restaurant_dish_array[i] = {
                 "name": restaurant_menu[i].name,
                 "price": restaurant_menu[i].price

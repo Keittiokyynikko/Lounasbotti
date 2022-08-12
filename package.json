@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "lint": "eslint ."
   },
   "author": "Juuso Karvinen",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "he": "^1.2.0",
     "isomorphic-unfetch": "^3.1.0",
     "jquery": "^3.6.0",
+    "prettier": "^2.7.1",
     "puppeteer": "^15.1.1",
     "slackbots": "^1.2.0",
     "xmldom": "^0.6.0"

@@ -16,7 +16,19 @@ const wednesday_greetings = [
     "Tiedättekös, ei ole enää pitkä matka viikonloppuun. Laske kuitenkin se kalja alas ja ota ennemmin ruokaa:"
 ]
 
-const greetings = [monday_greetings, tuesday_greetings, wednesday_greetings]
+const thursday_greetings = [
+    "Aurinkoista maanantaita! Viikko on hyvä aloittaa maittavalla lounaalla ja tässä teille vaihtoehtoja:",
+    "Maanantaipäiviä kaikille! Tänään saattaa ärsyttää ja päätä kivistää, mutta onneksi on tarjolla paljon einestä:",
+    "Hei! Se on maanantai eli enää neljä yötä perjantaihin. Odotellessa kannattaa harkita syömistä, vaikka tällaista:"
+]
+
+const friday_greetings = [
+    "Aurinkoista maanantaita! Viikko on hyvä aloittaa maittavalla lounaalla ja tässä teille vaihtoehtoja:",
+    "Maanantaipäiviä kaikille! Tänään saattaa ärsyttää ja päätä kivistää, mutta onneksi on tarjolla paljon einestä:",
+    "Hei! Se on maanantai eli enää neljä yötä perjantaihin. Odotellessa kannattaa harkita syömistä, vaikka tällaista:"
+]
+
+const greetings = [monday_greetings, tuesday_greetings, wednesday_greetings, thursday_greetings, friday_greetings]
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const current_date = new Date().getDay();

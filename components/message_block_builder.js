@@ -49,6 +49,16 @@ const lunch_section = (dish_name, dish_price) => {
     };
 }
 
+const lunch_section_2 = (dish_name) => {
+    return {
+        type: "section",
+        text: {
+            type: "mrkdwn",
+            text: dish_name,
+        },
+    };
+}
+
 const info_section = (message) => {
     return {
         type: "section",
@@ -62,7 +72,6 @@ const info_section = (message) => {
 async function restaurant_lunch_section_build_1(
     url,
     date,
-    index,
     callback
 ) {
     const restaurant_url = url;
@@ -87,7 +96,7 @@ async function restaurant_lunch_section_build_1(
         resolve(restaurant_dish_blocks);
     })
 
-    return promise[index];
+    return promise;
 }
 
 async function restaurant_lunch_section_build_2(
@@ -106,7 +115,7 @@ async function restaurant_lunch_section_build_2(
             restaurant_dish_array[i] = {
                 name: restaurant_menu[i].name
             };
-            restaurant_dish_blocks[i] = lunch_section(
+            restaurant_dish_blocks[i] = lunch_section_2(
                 restaurant_menu[i].name
             );
         }

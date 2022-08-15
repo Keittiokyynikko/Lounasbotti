@@ -92,6 +92,26 @@ async function send_message() {
 		const fazer =
 			"https://www.foodandco.fi/modules/MenuRss/MenuRss/CurrentDay?costNumber=0069&language=fi";
 
+		const onda_list = await new Promise((resolve, reject) => {
+			const result = restaurant_lunch_section_build_1(
+				onda,
+				current_date,
+				scrape_onda
+			)
+			resolve(result)
+		})
+		console.log(onda_list)
+
+
+		for (var i = 0; i < onda_list.length; i++) {
+			if (i == onda_list.length - 1) {
+				console.log("Test" + await onda_list[i])
+			} else {
+				console.log("Test" + await onda_list[i] + ",")
+			}
+		}
+
+
 		await slackbot.chat.postMessage({
 			channel: "#lounasbotti-2",
 			text: "Päivän lounaslistat",
@@ -99,47 +119,50 @@ async function send_message() {
 				header(greeting),
 				date,
 				restaurant_header("ONDA", onda),
-				await restaurant_lunch_section_build_1(
-					onda,
-					current_date,
-					0,
-					scrape_onda
-				),
+				async function loop() {
+						for (var i = 0; i < onda_list.length; i++) {
+							if (i == onda_list.length - 1) {
+								return onda_list[i]
+							} else {
+								return onda_list[i] + ","
+							}
+						}
+					},
 
-				{
-					type: "divider",
-				},
-				restaurant_header("PIHKA", pihka),
-				await restaurant_lunch_section_build_2(
-					pihka,
-					current_date,
-					0,
-					scrape_pihka
-				),
-				await restaurant_lunch_section_build_2(
-					pihka,
-					current_date,
-					1,
-					scrape_pihka
-				),
-				await restaurant_lunch_section_build_2(
-					pihka,
-					current_date,
-					2,
-					scrape_pihka
-				),
-				await restaurant_lunch_section_build_2(
-					pihka,
-					current_date,
-					3,
-					scrape_pihka
-				),
-				info_section("Koko pöytä 11,60€"),
-				info_section("Vihreä pöytä + keitto 10,60€"),
+					{
+						type: "divider",
+					},
+					restaurant_header("PIHKA", pihka),
+					await restaurant_lunch_section_build_2(
+						pihka,
+						current_date,
+						0,
+						scrape_pihka
+					),
+					await restaurant_lunch_section_build_2(
+						pihka,
+						current_date,
+						1,
+						scrape_pihka
+					),
+					await restaurant_lunch_section_build_2(
+						pihka,
+						current_date,
+						2,
+						scrape_pihka
+					),
+					await restaurant_lunch_section_build_2(
+						pihka,
+						current_date,
+						3,
+						scrape_pihka
+					),
+					info_section("Koko pöytä 11,60€"),
+					info_section("Vihreä pöytä + keitto 10,60€"),
 
-				{
-					type: "divider",
-				},
+					{
+						type: "divider",
+					},
 			],
 		});
 

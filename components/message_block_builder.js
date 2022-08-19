@@ -5,7 +5,7 @@ const header = (greeting) => {
         type: "header",
         text: {
             type: "plain_text",
-            text: ":cook: " + greeting,
+            text: ":pihka:",
         },
     };
 }
@@ -18,12 +18,12 @@ const date = {
     }, ],
 };
 
-const restaurant_header = (restaurant_name, url) => {
+const restaurant_header = (emoji, restaurant_name, url) => {
     return {
         type: "section",
         text: {
             type: "mrkdwn",
-            text: `*${restaurant_name}*`,
+            text: `${emoji}` + " " + `*${restaurant_name}*`,
         },
         accessory: {
             type: "button",
@@ -46,7 +46,7 @@ const lunch_section = (dish_name, dish_price) => {
             type: "mrkdwn",
             text: dish_name + " " + `*${dish_price}*`,
         },
-    };
+    }
 }
 
 const lunch_section_2 = (dish_name) => {
@@ -72,6 +72,7 @@ const info_section = (message) => {
 async function restaurant_lunch_section_build_1(
     url,
     date,
+    index,
     callback
 ) {
     const restaurant_url = url;
@@ -96,7 +97,7 @@ async function restaurant_lunch_section_build_1(
         resolve(restaurant_dish_blocks);
     })
 
-    return promise;
+    return promise[index];
 }
 
 async function restaurant_lunch_section_build_2(
@@ -128,11 +129,70 @@ async function restaurant_lunch_section_build_2(
     return promise[index];
 }
 
+async function restaurant_lunch_section_build_3(
+    url,
+    date,
+    index,
+    callback
+) {
+    const restaurant_url = url;
+    const restaurant_menu = await callback(restaurant_url, date)
+
+    const promise = await new Promise((resolve, reject) => {
+        const restaurant_dish_array = [];
+        const restaurant_dish_blocks = []
+        for (var i = 0; i < restaurant_menu.length; i++) {
+            restaurant_dish_array[i] = {
+                name: restaurant_menu[i]
+            };
+            restaurant_dish_blocks[i] = lunch_section_2(
+                restaurant_menu[i]
+            );
+        }
+
+        //console.log(onda_dish_blocks)
+
+        resolve(restaurant_dish_blocks);
+    })
+
+    return promise[index];
+}
+
+async function restaurant_lunch_section_build_4(
+    index,
+    callback
+) {
+    const restaurant_menu = await callback()
+
+    const promise = await new Promise((resolve, reject) => {
+        const restaurant_dish_array = [];
+        const restaurant_dish_blocks = []
+        for (var i = 0; i < restaurant_menu.length; i++) {
+            restaurant_dish_array[i] = {
+                name: restaurant_menu[i]
+            };
+            restaurant_dish_blocks[i] = lunch_section_2(
+                restaurant_menu[i].name
+            );
+        }
+
+        //console.log(onda_dish_blocks)
+
+        resolve(restaurant_dish_blocks);
+    })
+
+    return promise[index];
+}
+
+
+
 module.exports = {
     date,
     header,
     restaurant_header,
     restaurant_lunch_section_build_1,
     restaurant_lunch_section_build_2,
+    restaurant_lunch_section_build_3,
+    restaurant_lunch_section_build_4,
     info_section
 };

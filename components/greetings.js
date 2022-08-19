@@ -16,9 +16,10 @@ const greetings = {
     ],
     4: ["torstai"],
     5: [
-        "Hei, se on pikkulauantai! Vielä ei ole välttämättä pizza-burgeri-päivä, mutta ehkä täältä löytyy jotain hyvää:",
-        "Hoi! Kuka siellä kurisee? Kuka, kuka? Sehän taitaa olla masu! Nyt otatte sen masun kantoon ja valitsette paikan:",
-        "Tiedättekös, ei ole enää pitkä matka viikonloppuun. Laske kuitenkin se kalja alas ja ota ennemmin ruokaa:",
+
+        "Jumankauta, perjantai on nyt! Nyt voisi ehkä ottaa bissen jonkun seuraavista kanssa:",
+        "Hei, vielä jaksaa! Enää muutama tunti niin voit vetää perseet olalle. Sitä ennen kannattaa syödä:",
+        "Kuules, tiedän että tykkäät painaa perjantainakin kovaa duunia, mutta ota hetki huilia ja haukkaa eväitä maistuvia:",
     ],
 };
 

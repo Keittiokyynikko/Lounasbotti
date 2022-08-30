@@ -3,9 +3,14 @@ require("dotenv").config({
 });
 
 const express = require("express");
+
 const {
 	WebClient
 } = require("@slack/web-api");
+
+const {
+	RTMClient
+} = require("@slack/rtm-api");
 
 const {
 	scrape_onda
@@ -45,7 +50,8 @@ const current_date = new Date().getDay();
 // eslint-disable-next-line no-undef
 const slackbot = new WebClient(process.env.SLACK_BOT_TOKEN_T);
 // eslint-disable-next-line no-undef
-console.log(process.env.SLACK_BOT_TOKEN_T);
+const rtm = new RTMClient(process.env.SLACK_BOT_TOKEN_T);
+
 
 async function send_message() {
 	try {
@@ -63,7 +69,7 @@ async function send_message() {
 			channel: "#lounasbotti-2",
 			text: "Lounasbotin beta-testi",
 			blocks: [
-				header(greeting),
+				await header(greeting),
 				date,
 				restaurant_header(":restaurant_onda:", "ONDA", onda),
 				await restaurant_lunch_section_build_1(onda, current_date, 0, scrape_onda),
@@ -71,6 +77,7 @@ async function send_message() {
 				await restaurant_lunch_section_build_1(onda, current_date, 2, scrape_onda),
 				await restaurant_lunch_section_build_1(onda, current_date, 3, scrape_onda),
 				await restaurant_lunch_section_build_1(onda, current_date, 4, scrape_onda),
+				info_section("*ALENNUS: Buffet-lounaan kuubilaisille 11,30 €, sisältäen kahvin*"),
 
 				{
 					type: "divider",
@@ -110,7 +117,7 @@ async function send_message() {
 				await restaurant_lunch_section_build_4(3, scrape_fazer),
 				await restaurant_lunch_section_build_4(4, scrape_fazer),
 				await restaurant_lunch_section_build_4(5, scrape_fazer),
-				info_section("Hinta ei tiedossa, käy katsomassa, jotain 10 €")
+				info_section("Buffet-lounaan hinta 12 €")
 			],
 		});
 

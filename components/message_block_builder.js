@@ -5,7 +5,7 @@ const header = (greeting) => {
         type: "header",
         text: {
             type: "plain_text",
-            text: ":pihka:",
+            text: greeting,
         },
     };
 }

@@ -17,7 +17,11 @@ const greetings = {
         "Tiedättekös, ei ole enää pitkä matka viikonloppuun. Laske kuitenkin se kalja alas ja ota ennemmin ruokaa:",
         "Huoh... Toivon jo viikonloppua, sillä olen väsynyt. Mutta, rakas ihminen, älä välitä minusta. Tässä sinulle:"
     ],
-    4: ["torstai"],
+    4: ["Torjandeita ihmistoverit! Huomenna on jo perjantai, joten jaksakaa siihen asti syömällä:",
+        "Morjesta! Tänään pitäisi syödä hernekeittoa ja pannaria, ehkä täältä löytyy:",
+        "Heipati hei! Teeleipä? Tai sitten jotain muuta?",
+        "Alkaa vähitellen riittämään... Torstaina pitää kuitenkin syödä, joten tehkää päätös:"
+    ],
     5: [
 
         "Jumankauta, perjantai on nyt! Nyt voisi ehkä ottaa bissen jonkun seuraavista kanssa:",

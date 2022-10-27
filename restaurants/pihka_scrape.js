@@ -11,7 +11,11 @@ async function format_data(data) {
 async function scrape_pihka(url) {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
-  await page.goto(url)
+  page.setDefaultNavigationTimeout(0);
+  await page.goto(url, {
+    waitUntil: 'load',
+    timeout: 0
+  })
 
   //Lunch-elements from website
 

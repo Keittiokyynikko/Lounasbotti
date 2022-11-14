@@ -1,28 +1,14 @@
 require('dotenv').config()
 
-const {
-  WebClient
-} = require('@slack/web-api')
+const { WebClient } = require('@slack/web-api')
 
-const {
-  scrape_onda
-} = require('./restaurants/onda_scrape.js')
-const {
-  scrape_pantry
-} = require('./restaurants/pantry_scrape.js')
-const {
-  scrape_pihka
-} = require('./restaurants/pihka_scrape.js')
-const {
-  scrape_bruket
-} = require('./restaurants/bruket_scrape.js')
-const {
-  scrape_fazer
-} = require('./restaurants/fazer_scrape.js')
+const { scrape_onda } = require('./restaurants/onda_scrape.js')
+const { scrape_pantry } = require('./restaurants/pantry_scrape.js')
+const { scrape_pihka } = require('./restaurants/pihka_scrape.js')
+const { scrape_bruket } = require('./restaurants/bruket_scrape.js')
+const { scrape_fazer } = require('./restaurants/fazer_scrape.js')
 
-const {
-  greeting
-} = require('./components/greetings.js')
+const { greeting } = require('./components/greetings.js')
 const {
   date,
   header,
@@ -38,9 +24,11 @@ const slackToken = process.env.SLACK_BOT_TOKEN_T
 const slackbot = new WebClient(slackToken)
 
 const objectEmpty = (obj) => {
-  return obj &&
+  return (
+    obj &&
     Object.keys(obj).length === 0 &&
     Object.getPrototypeOf(obj) === Object.prototype
+  )
 }
 
 const objectNull = (obj) => {
@@ -49,7 +37,7 @@ const objectNull = (obj) => {
 
 const loopData = (data) => {
   for (let i = 0; i < data.length; i++) {
-    return data[i];
+    return data[i]
   }
 }
 
@@ -60,39 +48,38 @@ async function send_message() {
     const onda_url = 'https://ravintolaonda.fi/'
     const pihka_url = 'https://www.pihka.fi/pihka-lintulahti/'
     const pantry_url = 'https://thepantry.fi/sornainen/#lounas/'
-    const bruket_url = 'https://www.kampanja.co/dev/bruket/admin/api.php?a=lunch'
+    const bruket_url =
+      'https://www.kampanja.co/dev/bruket/admin/api.php?a=lunch'
     const fazer_url =
       'https://www.foodandco.fi/modules/MenuRss/MenuRss/CurrentDay?costNumber=0069&language=fi'
 
     const onda_data = await scrape_onda(onda_url, current_date)
-    const onda_blocks = onda_data.map(data => {
+    const onda_blocks = onda_data.map((data) => {
       if (data.name == null || data.price == null) {
         return lunch_section_name('--- Tietoa ei onnistuttu hakemaan ---')
       } else {
         return lunch_section(data.name, data.price)
       }
-
     })
 
     const pihka_data = await scrape_pihka(pihka_url)
-    const pihka_blocks = pihka_data.map(data => {
+    const pihka_blocks = pihka_data.map((data) => {
       return lunch_section_name(data.name)
     })
 
-    let pantry_blocks = [];
+    let pantry_blocks = []
 
     try {
       const pantry_data = await scrape_pantry(pantry_url, current_date)
-      pantry_blocks = pantry_data.map(data => {
+      pantry_blocks = pantry_data.map((data) => {
         return lunch_section(data.name, data.price)
       })
     } catch (err) {
-      pantry_blocks = ["Tietoja ei voitu hakea", "Tietoja ei voitu hakea"];
+      pantry_blocks = ['Tietoja ei voitu hakea', 'Tietoja ei voitu hakea']
     }
 
     const bruket_data = await scrape_bruket(bruket_url, current_date)
-    const bruket_blocks = bruket_data.map(data => {
-
+    const bruket_blocks = bruket_data.map((data) => {
       if (objectEmpty(bruket_data)) {
         return lunch_section_name('Tietoja ei saatavilla')
       } else if (objectNull(bruket_data)) {
@@ -103,14 +90,13 @@ async function send_message() {
     })
 
     const fazer_data = await scrape_fazer()
-    const fazer_blocks = await fazer_data.map(data => {
+    const fazer_blocks = await fazer_data.map((data) => {
       if (data.name == null) {
         return lunch_section_name('--- Tietoa ei onnistuttu hakemaan ---')
       } else {
         return lunch_section_name(data.name)
       }
     })
-
 
     await slackbot.chat.postMessage({
       channel: process.env.TESTI,

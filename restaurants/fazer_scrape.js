@@ -1,9 +1,6 @@
 const cheerio = require('cheerio')
 const axios = require('axios')
-const {
-  XMLParser,
-  XMLBuilder
-} = require('fast-xml-parser')
+const { XMLParser, XMLBuilder } = require('fast-xml-parser')
 const he = require('he')
 
 async function scrape_fazer() {

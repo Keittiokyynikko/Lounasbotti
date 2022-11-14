@@ -12,10 +12,12 @@ const header = (greeting) => {
 
 const date = {
   type: 'context',
-  elements: [{
-    text: day_string,
-    type: 'mrkdwn',
-  }, ],
+  elements: [
+    {
+      text: day_string,
+      type: 'mrkdwn',
+    },
+  ],
 }
 
 const restaurant_header = (emoji, restaurant_name, url) => {
@@ -75,5 +77,5 @@ module.exports = {
   restaurant_header,
   info_section,
   lunch_section,
-  lunch_section_name
+  lunch_section_name,
 }

@@ -33,7 +33,7 @@ const {
 } = require('./components/message_block_builder.js')
 
 const current_date = new Date().getDay()
-const slackToken = process.env.SLACK_BOT_TOKEN_K
+const slackToken = process.env.SLACK_BOT_TOKEN_T
 
 const slackbot = new WebClient(slackToken)
 
@@ -49,7 +49,7 @@ const objectNull = (obj) => {
 
 const loopData = (data) => {
   for (let i = 0; i < data.length; i++) {
-    return data[i]
+    return data[i];
   }
 }
 
@@ -66,7 +66,12 @@ async function send_message() {
 
     const onda_data = await scrape_onda(onda_url, current_date)
     const onda_blocks = onda_data.map(data => {
-      return lunch_section(data.name, data.price)
+      if (data.name == null || data.price == null) {
+        return lunch_section_name('--- Tietoa ei onnistuttu hakemaan ---')
+      } else {
+        return lunch_section(data.name, data.price)
+      }
+
     })
 
     const pihka_data = await scrape_pihka(pihka_url)
@@ -74,10 +79,16 @@ async function send_message() {
       return lunch_section_name(data.name)
     })
 
-    const pantry_data = await scrape_pantry(pantry_url, current_date)
-    const pantry_blocks = pantry_data.map(data => {
-      return lunch_section(data.name, data.price)
-    })
+    let pantry_blocks = [];
+
+    try {
+      const pantry_data = await scrape_pantry(pantry_url, current_date)
+      pantry_blocks = pantry_data.map(data => {
+        return lunch_section(data.name, data.price)
+      })
+    } catch (err) {
+      pantry_blocks = ["Tietoja ei voitu hakea", "Tietoja ei voitu hakea"];
+    }
 
     const bruket_data = await scrape_bruket(bruket_url, current_date)
     const bruket_blocks = bruket_data.map(data => {
@@ -92,13 +103,17 @@ async function send_message() {
     })
 
     const fazer_data = await scrape_fazer()
-    const fazer_blocks = fazer_data.map(data => {
-      return lunch_section_name(data.name)
+    const fazer_blocks = await fazer_data.map(data => {
+      if (data.name == null) {
+        return lunch_section_name('--- Tietoa ei onnistuttu hakemaan ---')
+      } else {
+        return lunch_section_name(data.name)
+      }
     })
-    console.log(fazer_data)
+
 
     await slackbot.chat.postMessage({
-      channel: process.env.LOUNAS,
+      channel: process.env.TESTI,
       text: 'Päivän lounaslista',
       blocks: [
         await header(greeting),
@@ -127,7 +142,7 @@ async function send_message() {
         {
           type: 'divider',
         },
-        restaurant_header(':pantry:', 'PANTRY', pantry_url),
+        restaurant_header(':thepantry:', 'PANTRY', pantry_url),
         pantry_blocks[0],
         pantry_blocks[1],
         pantry_blocks[2],
@@ -145,11 +160,10 @@ async function send_message() {
           type: 'divider',
         },
         restaurant_header(':fazer:', 'FAZER LINTULAHTI', fazer_url),
-        fazer_blocks[0],
-        fazer_blocks[1],
-        fazer_blocks[2],
-        fazer_blocks[3],
-        fazer_blocks[4],
+        //info_section("Ravintolan työntekijät eivät hallitse oikeinkirjoitusta, joten olen toistaiseksi voimaton..."),
+        loopData(fazer_blocks),
+        console.log(fazer_blocks.length),
+
         info_section('Buffet-lounaan hinta 12 €'),
       ],
     })

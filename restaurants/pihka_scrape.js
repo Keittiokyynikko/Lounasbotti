@@ -10,12 +10,16 @@ async function format_data(data) {
 
 async function scrape_pihka(url) {
   const browser = await puppeteer.launch()
-  const page = await browser.newPage()
+  const page = await browser.newPage({
+    headless: true
+  })
   page.setDefaultNavigationTimeout(0);
   await page.goto(url, {
     waitUntil: 'load',
     timeout: 0
   })
+
+  console.log(url);
 
   //Lunch-elements from website
 
@@ -37,6 +41,8 @@ async function scrape_pihka(url) {
   const [pihka_dessert_name_xpath] = await page.$x(pihka_dessert)
   const pihka_dessert_name = await format_data(pihka_dessert_name_xpath)
 
+  console.log(pihka_vegan_name);
+
   const pihka_lunch_meat = {
     name: pihka_meat_name,
   }
@@ -49,6 +55,8 @@ async function scrape_pihka(url) {
   const pihka_lunch_dessert = {
     name: pihka_dessert_name,
   }
+
+  await browser.close();
 
   return [
     pihka_lunch_meat,

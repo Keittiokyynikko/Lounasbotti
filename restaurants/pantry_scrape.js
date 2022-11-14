@@ -10,12 +10,16 @@ async function format_data(data) {
 
 async function scrape_pantry(url, date_index) {
   const browser = await puppeteer.launch()
-  const page = await browser.newPage()
+  const page = await browser.newPage({
+    headless: true
+  })
   page.setDefaultNavigationTimeout(0);
   await page.goto(url, {
     waitUntil: 'load',
     timeout: 0
   })
+
+  console.log(url);
 
   //Lunch-elements from website
 
@@ -83,6 +87,8 @@ async function scrape_pantry(url, date_index) {
   const [lunch_vegan_name_xpath] = await page.$x(lunch_vegan)
   const lunch_vegan_name = await format_data(lunch_vegan_name_xpath)
 
+  console.log(lunch_vegan_name);
+
   const [lunch_meat_name_xpath] = await page.$x(lunch_meat)
   const lunch_meat_name = await format_data(lunch_meat_name_xpath)
 
@@ -98,6 +104,9 @@ async function scrape_pantry(url, date_index) {
     name: lunch_vegan_name,
     price: lunch_price,
   }
+
+  console.log(pantry_lunch_vegan);
+
   const pantry_lunch_meat = {
     name: lunch_meat_name,
     price: lunch_price,
@@ -106,6 +115,8 @@ async function scrape_pantry(url, date_index) {
     name: lunch_fish_name,
     price: lunch_price,
   }
+
+  await browser.close();
 
   return [pantry_lunch_vegan, pantry_lunch_meat, pantry_lunch_fish]
 }

@@ -9,13 +9,17 @@ async function format_data(data) {
 }
 
 async function scrape_onda(url, date_index) {
+  console.log("Aloitus!");
   const browser = await puppeteer.launch()
+  console.log("Selain!");
   const page = await browser.newPage()
+  console.log("Sivu!");
   page.setDefaultNavigationTimeout(0);
   await page.goto(url, {
     waitUntil: 'load',
     timeout: 0
   })
+  console.log(url);
 
   //Lunch-elements from website
 
@@ -110,6 +114,8 @@ async function scrape_onda(url, date_index) {
     name: buffet_meat_name,
     price: buffet_price + ' €',
   }
+
+  await browser.close();
 
   return [
     onda_buffet_salad,

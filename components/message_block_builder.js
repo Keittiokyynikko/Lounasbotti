@@ -41,22 +41,13 @@ const restaurant_header = (emoji, restaurant_name, url) => {
   }
 }
 
-const lunch_section = (dish_name, dish_price) => {
+const lunch_section = (dish_name, dish_price = null) => {
+  const text = dish_price ? `${dish_name} *${dish_price}*` : dish_name
   return {
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: dish_name + ' ' + `*${dish_price}*`,
-    },
-  }
-}
-
-const lunch_section_name = (dish_name) => {
-  return {
-    type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: dish_name,
+      text,
     },
   }
 }
@@ -77,5 +68,4 @@ module.exports = {
   restaurant_header,
   info_section,
   lunch_section,
-  lunch_section_name,
 }

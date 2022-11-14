@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-async function scrape_bruket(url, date_index) {
+async function scrape_bruket(date_index) {
   const promise = await new Promise((resolve) => {
     const bruket = 'https://www.kampanja.co/dev/bruket/admin/api.php?a=lunch'
     axios.get(bruket).then((res) => {

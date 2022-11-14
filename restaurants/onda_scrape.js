@@ -8,18 +8,15 @@ async function format_data(data) {
   return formated_data
 }
 
-async function scrape_onda(url, date_index) {
-  console.log('Aloitus!')
+async function scrape_onda(date_index) {
   const browser = await puppeteer.launch()
-  console.log('Selain!')
   const page = await browser.newPage()
-  console.log('Sivu!')
+  const url = 'https://ravintolaonda.fi/'
   page.setDefaultNavigationTimeout(0)
   await page.goto(url, {
     waitUntil: 'load',
     timeout: 0,
   })
-  console.log(url)
 
   //Lunch-elements from website
 

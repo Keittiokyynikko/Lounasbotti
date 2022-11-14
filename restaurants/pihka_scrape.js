@@ -8,7 +8,8 @@ async function format_data(data) {
   return formated_data
 }
 
-async function scrape_pihka(url) {
+async function scrape_pihka() {
+  const url = 'https://www.pihka.fi/pihka-lintulahti/'
   const browser = await puppeteer.launch()
   const page = await browser.newPage({
     headless: true,

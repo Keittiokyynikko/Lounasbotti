@@ -20,29 +20,27 @@ async function scrape_pihka() {
     timeout: 0,
   })
 
-  console.log(url)
-
   //Lunch-elements from website
 
-  const pihka_meat = '//*[@id="main-content"]/article/div/div[2]/div/div/p[1]'
+ 
+    const pihka_meat = '//*[@id="main-content"]/article/div/div[2]/div/div/p[1]'
   const pihka_vegan = '//*[@id="main-content"]/article/div/div[2]/div/div/p[2]'
   const pihka_soup = '//*[@id="main-content"]/article/div/div[2]/div/div/p[3]'
   const pihka_dessert =
     '//*[@id="main-content"]/article/div/div[2]/div/div/p[4]'
 
-  const [pihka_vegan_name_xpath] = await page.$x(pihka_vegan)
-  const pihka_vegan_name = await format_data(pihka_vegan_name_xpath)
+  const [pihka_vegan_name_xpath] = pihka_vegan !== null ? await page.$x(pihka_vegan) : "--Tietoa ei saatavilla--"
+  const pihka_vegan_name = pihka_vegan !== null ? await format_data(pihka_vegan_name_xpath) : "--Tietoa ei saatavilla--"
 
-  const [pihka_meat_name_xpath] = await page.$x(pihka_meat)
-  const pihka_meat_name = await format_data(pihka_meat_name_xpath)
+  const [pihka_meat_name_xpath] = pihka_meat !== null ? await page.$x(pihka_meat) : "--Tietoa ei saatavilla--"
+  const pihka_meat_name = pihka_meat !== null ? await format_data(pihka_meat_name_xpath) : "--Tietoa ei saatavilla--"
 
-  const [pihka_soup_name_xpath] = await page.$x(pihka_soup)
-  const pihka_soup_name = await format_data(pihka_soup_name_xpath)
+  const [pihka_soup_name_xpath] = pihka_meat !== null ? await page.$x(pihka_meat) : "--Tietoa ei saatavilla--"
+  const pihka_soup_name = pihka_soup !== null ? await format_data(pihka_soup_name_xpath) : "--Tietoa ei saatavilla--"
 
-  const [pihka_dessert_name_xpath] = await page.$x(pihka_dessert)
-  const pihka_dessert_name = await format_data(pihka_dessert_name_xpath)
+  const [pihka_dessert_name_xpath] = pihka_dessert !== null ? await page.$x(pihka_dessert) : "--Tietoa ei saatavilla--"
+  const pihka_dessert_name = pihka_dessert !== null ? await format_data(pihka_dessert_name_xpath) : "--Tietoa ei saatavilla--"
 
-  console.log(pihka_vegan_name)
 
   const pihka_lunch_meat = {
     name: pihka_meat_name,

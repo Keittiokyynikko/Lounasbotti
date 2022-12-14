@@ -83,19 +83,17 @@ async function scrape_pantry(date_index) {
     lunch_fish = friday_kala
   }
 
-  const [lunch_vegan_name_xpath] = await page.$x(lunch_vegan)
+  const [lunch_vegan_name_xpath] = lunch_vegan !== null ? await page.$x(lunch_vegan) : '--Tietoa ei saatavilla--'
   const lunch_vegan_name = await format_data(lunch_vegan_name_xpath)
 
-  const [lunch_meat_name_xpath] = await page.$x(lunch_meat)
+  const [lunch_meat_name_xpath] = lunch_meat !== null ? await page.$x(lunch_meat) : '--Tietoa ei saatavilla--'
   const lunch_meat_name = await format_data(lunch_meat_name_xpath)
 
-  const [lunch_fish_name_xpath] = await page.$x(lunch_fish)
+  const [lunch_fish_name_xpath] = lunch_fish !== null ? await page.$x(lunch_fish) : '--Tietoa ei saatavilla--'
   const lunch_fish_name = await format_data(lunch_fish_name_xpath)
 
-  const [lunch_price_xpath] = await page.$x(
-    '//*[@id="torstai"]/div/div[5]/div/div/div[2]/div/div/div/div/div/div[1]/h6'
-  )
-  const lunch_price = await format_data(lunch_price_xpath)
+  const [lunch_price_xpath] = await page.$x('//*[@id="torstai"]/div/div[5]/div/div/div[2]/div/div/div/div/div/div[1]/h6')
+  const lunch_price = lunch_price_xpath !== null ? await format_data(lunch_price_xpath) : '--Tietoa ei saatavilla--'
 
   const pantry_lunch_vegan = {
     name: lunch_vegan_name,

@@ -10,7 +10,8 @@ async function scrape_fazer() {
         'https://www.foodandco.fi/modules/MenuRss/MenuRss/CurrentDay?costNumber=0069&language=fi'
       )
       .then((res) => {
-        const parser = new XMLParser()
+        try{
+          const parser = new XMLParser()
         const builder = new XMLBuilder()
         const data = res.data
 
@@ -60,6 +61,9 @@ async function scrape_fazer() {
         ]
 
         resolve(lunch_list)
+        } catch (err) {
+          resolve ('--Tietoja ei onnistuttu hakemaan--')
+        }
       })
   })
 
